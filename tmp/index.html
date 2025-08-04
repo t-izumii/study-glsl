@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+    .box {
+      width: 1000px;
+      max-width: 90vw;
+      height: 800px;
+      max-height: 90vh;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      /* background-color: blue;
+      opacity: 1; */
+    }
+  </style>
+  <body>
+    <div id="app"></div>
+    <div class="box" data-webgl></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
