@@ -13,25 +13,42 @@
     }
     body {
       width: 100vw;
-      height: 100vh;
+      height: 400vh;
       position: relative;
+      overflow-x: hidden;
     }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+
     .box {
+      background-color: blue;
+      opacity: 0.2;
+    }
+
+    .box-1 {
       width: 1000px;
       max-width: 90vw;
       height: 800px;
       max-height: 90vh;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      /* background-color: blue;
-      opacity: 1; */
+    }
+
+    .box-2 {
+      margin-top: 200px;
+      width: 1000px;
+      max-width: 90vw;
+      height: 800px;
+      max-height: 90vh;
     }
   </style>
   <body>
     <div id="app"></div>
-    <div class="box" data-webgl></div>
+    <div class="box box-1" data-webgl></div>
+    <div class="box box-2" data-webgl></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
