@@ -13,7 +13,6 @@
     }
     body {
       width: 100vw;
-      height: 400vh;
       position: relative;
       overflow-x: hidden;
     }
@@ -23,11 +22,20 @@
       left: 0;
       width: 100vw;
       height: 100vh;
+      z-index: -1;
+    }
+
+    .relative {
+      position: relative;
+    }
+
+    .mt-10 {
+      margin-top: 10rem;
     }
 
     .box {
       background-color: blue;
-      opacity: 0.2;
+      opacity: 0;
     }
 
     .box-1 {
@@ -47,8 +55,16 @@
   </style>
   <body>
     <div id="app"></div>
-    <div class="box box-1" data-webgl></div>
-    <div class="box box-2" data-webgl></div>
+    <div class="relative">
+      <div class="box box-1" data-webgl></div>
+      <div class="box box-2" data-webgl></div>
+    </div>
+
+    <div class="relative mt-10">
+      <div class="box box-1" data-webgl></div>
+      <div class="box box-2" data-webgl></div>
+    </div>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
