@@ -2,16 +2,22 @@ import CreateCamera from "./camera";
 import CreateScene from "./scene";
 import CreateRenderer from "./renderer";
 import CreateObject from "./objects";
+import CreateGUI from "./gui";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 class WebGLApp {
   camera: any;
   scene: any;
   renderer: any;
   objects: any[];
+  gui: any;
+  controls: OrbitControls;
   animate: any;
   element: HTMLElement;
   width: number;
   height: number;
+  progressTarget: number = 1;
+  progressCurrent: number = 1;
 
   constructor(element: HTMLElement, width: number, height: number) {
     this.element = element;
@@ -33,6 +39,11 @@ class WebGLApp {
     this.renderer = createRenderer.init();
     this.element.appendChild(this.renderer.domElement);
 
+    const createGUI = new CreateGUI();
+    this.gui = createGUI.init();
+
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+
     this.setup();
   }
 
@@ -45,6 +56,27 @@ class WebGLApp {
       this.scene.add(object);
       this.objects.push(createObject);
     });
+
+    this.setupGUI();
+  }
+
+  setupGUI() {
+    if (this.objects.length > 0 && this.objects[0].material) {
+      const folder = this.gui.addFolder("Shader Controls");
+
+      const progressControl = {
+        progress: true,
+      };
+
+      folder
+        .add(progressControl, "progress")
+        .name("Progress")
+        .onChange((value: boolean) => {
+          this.progressTarget = value ? 1.0 : 0.0;
+        });
+
+      folder.open();
+    }
   }
 
   render() {
@@ -55,8 +87,19 @@ class WebGLApp {
     const startTime = performance.now();
     const animate = () => {
       const currentTime = (performance.now() - startTime) * 0.001;
+
+      // Progress interpolation
+      const lerpSpeed = 0.05;
+      this.progressCurrent +=
+        (this.progressTarget - this.progressCurrent) * lerpSpeed;
+
+      this.controls.update();
+
       this.objects.forEach((obj) => {
         obj.update(this.width, this.height, currentTime);
+        if (obj.material) {
+          obj.material.uniforms.uProgress.value = this.progressCurrent;
+        }
       });
 
       this.render();

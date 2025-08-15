@@ -1,4 +1,5 @@
 import { PlaneGeometry, Mesh, ShaderMaterial } from "three";
+import GUI from "lil-gui";
 import fragment from "./glsl/fragment.glsl";
 import vertex from "./glsl/vertex.glsl";
 
@@ -18,14 +19,16 @@ class CreateObject {
 
   init() {
     const rect = this.html.getBoundingClientRect();
-    this.geometry = new PlaneGeometry(rect.width, rect.height);
+    this.geometry = new PlaneGeometry(rect.width, rect.height, 50, 50);
     this.material = new ShaderMaterial({
       vertexShader: vertex,
       fragmentShader: fragment,
       uniforms: {
         uTime: { value: 0.0 },
         uResolution: { value: [this.width, this.height] },
+        uProgress: { value: 1.0 },
       },
+      transparent: true,
     });
 
     this.mesh = new Mesh(this.geometry, this.material);
@@ -40,7 +43,7 @@ class CreateObject {
 
   update(width: number, height: number, time: number) {
     const rect = this.html.getBoundingClientRect();
-    const newGeometry = new PlaneGeometry(rect.width, rect.height);
+    const newGeometry = new PlaneGeometry(rect.width, rect.height, 50, 50);
 
     this.mesh.geometry.dispose();
     this.mesh.geometry = newGeometry;
