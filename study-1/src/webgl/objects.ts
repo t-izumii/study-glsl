@@ -1,4 +1,4 @@
-import { PlaneGeometry, Mesh, ShaderMaterial } from "three";
+import { PlaneGeometry, Mesh, ShaderMaterial, TextureLoader } from "three";
 import GUI from "lil-gui";
 import fragment from "./glsl/fragment.glsl";
 import vertex from "./glsl/vertex.glsl";
@@ -20,6 +20,10 @@ class CreateObject {
   init() {
     const rect = this.html.getBoundingClientRect();
     this.geometry = new PlaneGeometry(rect.width, rect.height, 50, 50);
+    
+    const textureLoader = new TextureLoader();
+    const texture = textureLoader.load('/src/textures/texture.png');
+    
     this.material = new ShaderMaterial({
       vertexShader: vertex,
       fragmentShader: fragment,
@@ -27,6 +31,7 @@ class CreateObject {
         uTime: { value: 0.0 },
         uResolution: { value: [this.width, this.height] },
         uProgress: { value: 1.0 },
+        uTexture: { value: texture },
       },
       transparent: true,
     });

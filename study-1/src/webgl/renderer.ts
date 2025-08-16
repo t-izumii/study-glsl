@@ -15,7 +15,7 @@ class CreateRenderer {
     });
     renderer.setSize(this.width, this.height);
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setClearColor(0x000000, 0);
+    renderer.setClearColor(0x000000, 0.3);
 
     return renderer;
   }

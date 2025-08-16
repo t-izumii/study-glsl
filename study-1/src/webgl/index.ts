@@ -65,15 +65,13 @@ class WebGLApp {
       const folder = this.gui.addFolder("Shader Controls");
 
       const progressControl = {
-        progress: true,
+        startProgress: () => {
+          this.progressCurrent = 0.0;
+          this.progressTarget = 1.0;
+        },
       };
 
-      folder
-        .add(progressControl, "progress")
-        .name("Progress")
-        .onChange((value: boolean) => {
-          this.progressTarget = value ? 1.0 : 0.0;
-        });
+      folder.add(progressControl, "startProgress").name("Start Progress");
 
       folder.open();
     }
@@ -89,7 +87,7 @@ class WebGLApp {
       const currentTime = (performance.now() - startTime) * 0.001;
 
       // Progress interpolation
-      const lerpSpeed = 0.05;
+      const lerpSpeed = 0.04;
       this.progressCurrent +=
         (this.progressTarget - this.progressCurrent) * lerpSpeed;
 
